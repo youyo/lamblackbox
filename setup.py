@@ -1,8 +1,28 @@
-from setuptools import setup
+#!/usr/bin/env python
+# coding: utf-8
+
+from setuptools import setup, Command
 from pip._internal.req import parse_requirements
+import os
 
 install_reqs = parse_requirements('requirements.txt', session='hack')
 requires = [str(ir.req) for ir in install_reqs]
+
+
+class PublishCommand(Command):
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system('rm -rf dist/')
+        os.system('python setup.py sdist')
+        os.system('twine upload dist/*')
+
 
 setup(
     name='lamblackbox',
@@ -28,4 +48,5 @@ setup(
     project_urls={
         'Source': 'https://github.com/youyo/lamblackbox',
     },
+    cmdclass={'publish': PublishCommand},
 )
