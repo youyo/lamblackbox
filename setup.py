@@ -6,7 +6,6 @@ install_reqs = parse_requirements('requirements.txt', session='hack')
 requires = [str(ir.req) for ir in install_reqs]
 lamblackbox_version_bytes = subprocess.run(
     ['git', 'describe', '--tags', '--abbrev=0'], stdout=subprocess.PIPE).stdout.decode('utf-8')
-print(lamblackbox_version_bytes)
 
 setup(
     name='lamblackbox',
