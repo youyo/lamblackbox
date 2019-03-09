@@ -9,7 +9,7 @@ setup(
     description='This is a AWS Lambda function logging library.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    setup_requires=['setuptools_scm'],
+    use_scm_version=True,
     url='https://github.com/youyo/lamblackbox',
     author='youyo',
     author_email='1003ni2@gmail.com',
