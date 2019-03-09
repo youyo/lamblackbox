@@ -1,12 +1,16 @@
 from setuptools import setup
 from pip._internal.req import parse_requirements
+import subprocess
 
 install_reqs = parse_requirements('requirements.txt', session='hack')
 requires = [str(ir.req) for ir in install_reqs]
+lamblackbox_version_bytes = subprocess.run(
+    ['git', 'describe', '--tags', '--abbrev=0'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+print(lamblackbox_version_bytes)
 
 setup(
     name='lamblackbox',
-    version='0.0.4',
+    version=lamblackbox_version_bytes,
     description='This is a AWS Lambda function logging library.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
