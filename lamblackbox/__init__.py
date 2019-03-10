@@ -44,6 +44,10 @@ class LamBlackBox():
             log = json.dumps(self.set_trace_id(obj))
             self.logger.critical(log)
 
+        def exception(self, obj: typing.Dict)->None:
+            log = json.dumps(self.set_trace_id(obj))
+            self.logger.exception(log)
+
     def __init__(self)->None:
         pass
 
@@ -70,7 +74,7 @@ def apigateway(func):
             logger.info({'result': ret})
         except Exception as e:
             error_string = str(e)
-            logger.error({'result': error_string})
+            logger.exception({'result': error_string})
             ret = {
                 'statusCode': 500,
                 'headers': {
