@@ -84,3 +84,25 @@ def apigateway(func):
             }
         return ret
     return wrapper
+
+
+def sqs(func):
+    @functools.wraps(func)
+    def wrapper(event, context):
+        ret: typing.List = []
+        for record in event['Records']:
+            lbb = LamBlackBox()
+            trace_id = record['messageAttributes'].get(X_APPLICATION_TRACE_ID, {}).get('Value', lbb.gen_uuid())
+            logger = LamBlackBox.Logger(trace_id)
+            logger.info({'record': record})
+
+            try:
+                result = func(record, context)
+                logger.info({'result': result})
+                ret.append(result)
+            except Exception as e:
+                error_string = str(e)
+                logger.exception({'result': error_string})
+                raise e
+        return ret
+    return wrapper
